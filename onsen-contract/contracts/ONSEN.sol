@@ -3,6 +3,7 @@ pragma solidity ^0.7.0;
 
 import "hardhat/console.sol";
 
+// Deployed at : 0xC186F34E969b0c9084b5B5Db1FCC523Ef24D05a5
 contract ONSEN {
     struct PlatformData {
         string username;
