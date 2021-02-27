@@ -32,6 +32,8 @@ contract ONSEN {
         uint256 _platformID,
         string memory _username
     ) public {
+        require(msg.sender == _addr1, "No Permission"); // limits scope of data modification
+
         addressHandleMap[_addr1][_platformID].username = _username;
 
         handleAddressMap[_platformID][_username] = _addr1;
@@ -39,6 +41,8 @@ contract ONSEN {
 
     // Deletes data from both address and handle mapping
     function remove(address _addr1, uint256 _platformID) public {
+        require(msg.sender == _addr1, "No Permission"); // limits scope of data modification
+
         string memory _username =
             addressHandleMap[_addr1][_platformID].username;
         delete handleAddressMap[_platformID][_username];
