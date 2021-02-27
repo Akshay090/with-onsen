@@ -9,12 +9,15 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   const [portis, setPortis] = useState();
+  const [web3, setWeb3] = useState();
   const [wallet, setWallet] = useState();
   const [network, setNetwork] = useState();
+
   useEffect(() => {
     const loadInitData = async () => {
       const [_portis, _web3] = getPortisWeb3();
       setPortis(_portis);
+      setWeb3(_web3);
       _portis.onLogin((_wallet) => {
         setWallet(_wallet);
         router.push("/app");
@@ -37,6 +40,7 @@ function MyApp({ Component, pageProps }) {
       portis={portis}
       wallet={wallet}
       network={network}
+      web3={web3}
     />
   );
 }

@@ -5,7 +5,7 @@ export const getPortisWeb3 = () => {
   try {
     const portis = new Portis(
       "68d24ad4-cfbd-4575-997c-ed6de82a1ab7",
-      "rinkeby"
+      "maticMumbai"
     );
     const web3 = new Web3(portis.provider);
     return [portis, web3];
@@ -39,5 +39,10 @@ export const web3networks = {
     name: "Ethereum (kovan)",
     explorerTx: "https://blockscout.com/eth/kovan/tx",
     explorerAddress: "https://blockscout.com/eth/kovan/address",
+  },
+  80001: {
+    name: "Matic (Mumbai)",
+    explorerTx: "https://explorer-mumbai.maticvigil.com/tx",
+    explorerAddress: "https://explorer-mumbai.maticvigil.com/address",
   },
 };

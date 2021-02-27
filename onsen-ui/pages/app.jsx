@@ -1,12 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FiTwitter, FiGithub } from "react-icons/fi";
 import NotAuth from "../components/NotAuth";
 import Dialog from "../components/Dialog";
-const App = ({ portis, wallet, network }) => {
+import ONSEN_Contract from "../contract/ONSEN.json";
+import TwitterDialog from "../components/TwitterDialog";
+const CONTRACT_ADDRESS = "0xc186f34e969b0c9084b5b5db1fcc523ef24d05a5";
+const App = ({ portis, web3, wallet, network }) => {
   const [isSettingOpen, setSetting] = useState(false);
   const [isTwitterDialog, setTwitterDialog] = useState(false);
+  const [contract, setContract] = useState();
   const router = useRouter();
+  useEffect(() => {
+    try {
+      console.log(web3, "web3");
+      const instance = new web3.eth.Contract(
+        ONSEN_Contract.abi,
+        CONTRACT_ADDRESS
+      );
+      setContract(instance);
+    } catch (error) {
+      console.log(error, "error contract init");
+    }
+  }, []);
+  const verifyTweetAddress = (handle) => {
+    fetch(
+      "/api/tweetVerify?" +
+        new URLSearchParams({
+          address: wallet,
+          username: handle,
+        })
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        //address: "0x52f8de85d2007baf4fe07dac517b476b0c940d95"
+        // status: true
+        // username: "aks2899"
+        // verification_url : urlhere
+        console.log("handle ", data.username, "status ", data.status);
+        // 0 -> Twitter
+        if (data.status) {
+          console.log("for status ", data.statusj);
+          contract.methods.set(wallet, 0, handle).send({ from: wallet });
+          console.log("called contract");
+        }
+      });
+  };
   return (
     <>
       {!wallet ? (
@@ -16,7 +55,14 @@ const App = ({ portis, wallet, network }) => {
           className="flex flex-col items-center min-h-screen py-2"
           onClick={() => isSettingOpen && setSetting(false)}
         >
-          {isTwitterDialog && <Dialog close={() => setTwitterDialog(false)} />}
+          {isTwitterDialog && (
+            <Dialog close={() => setTwitterDialog(false)}>
+              <TwitterDialog
+                wallet={wallet}
+                verifyTweetAddress={verifyTweetAddress}
+              />
+            </Dialog>
+          )}
           <main className="max-w-5xl w-full">
             <section className="flex flex-wrap justify-between mt-4 px-4">
               <span className="text-blue-500 font-bold text-2xl">ONSEN</span>
