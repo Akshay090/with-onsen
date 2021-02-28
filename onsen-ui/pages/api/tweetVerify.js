@@ -14,12 +14,13 @@ export default function tweetVerify(req, res) {
   }
   console.log(address, username);
   const secrets = {
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token: process.env.TWITTER_ACCESS_TOKEN,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    consumer_key: String(process.env.TWITTER_CONSUMER_KEY),
+    consumer_secret: String(process.env.TWITTER_CONSUMER_SECRET),
+    access_token: String(process.env.TWITTER_ACCESS_TOKEN),
+    access_token_secret: String(process.env.TWITTER_ACCESS_TOKEN_SECRET),
   };
   const validConfig = checkProperties(secrets);
+  console.log("is env config valid ", validConfig);
   if (!validConfig) {
     res.status(500).json({ error: "ENV not set" });
   }
