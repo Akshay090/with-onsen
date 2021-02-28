@@ -20,7 +20,7 @@ export default function tweetVerify(req, res) {
     access_token_secret: String(process.env.TWITTER_ACCESS_TOKEN_SECRET),
   };
   const validConfig = checkProperties(secrets);
-  console.log("is env config valid ", validConfig);
+  console.log("is env config valid ", validConfig, secrets);
   if (!validConfig) {
     res.status(500).json({ error: "ENV not set" });
   }
