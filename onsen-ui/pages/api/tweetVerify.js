@@ -1,5 +1,12 @@
 var Twit = require("twit");
 
+function checkProperties(obj) {
+  const check = Object.values(obj).every(
+    (val) => val != undefined || val != null
+  );
+  return check;
+}
+
 export default function tweetVerify(req, res) {
   const { address, username } = req.query;
   if (!address || !username) {
@@ -12,6 +19,10 @@ export default function tweetVerify(req, res) {
     access_token: process.env.TWITTER_ACCESS_TOKEN,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
   };
+  const validConfig = checkProperties(secrets);
+  if (!validConfig) {
+    res.status(500).json({ error: "ENV not set" });
+  }
   const client = new Twit({
     ...secrets,
     app_only_auth: true,
@@ -26,9 +37,6 @@ export default function tweetVerify(req, res) {
 
   return client
     .get("statuses/user_timeline", params)
-    .catch((err) => {
-      console.log("caught error", err.stack);
-    })
     .then((res) => {
       let verification_url = "";
       res.data.forEach((tweet) => {
@@ -40,6 +48,9 @@ export default function tweetVerify(req, res) {
         return { verification_url, address, username, status: true };
       }
       return { address, username, status: false };
+    })
+    .catch((err) => {
+      console.log("caught error", err.stack);
     })
     .then((data) => res.status(200).json(data));
 }
