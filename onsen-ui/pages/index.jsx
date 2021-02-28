@@ -11,7 +11,10 @@ export default function Home({ portis }) {
       <main className="flex flex-col items-center justify-center flex-1 pl-20 md:px-20 text-center">
         <h1 className="text-6xl font-bold">
           Welcome to{" "}
-          <a className="text-blue-600" href="https://nextjs.org">
+          <a
+            className="text-blue-600"
+            href="https://github.com/Akshay090/with-onsen"
+          >
             ONSEN
           </a>
         </h1>
