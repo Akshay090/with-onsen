@@ -69,14 +69,23 @@ export default function Home({ portis }) {
       </main>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">
+        Powered by{" "}
         <a
           className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://docs.portis.io"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+          <img src="/portis_logo.svg" alt="Portis Logo" className="h-7 ml-2" />
+        </a>
+        <span className="ml-2">and</span>
+        <a
+          className="flex items-center justify-center"
+          href="https://docs.matic.network/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/matic-logo.svg" alt="MATIC Logo" className="h-7 ml-2" />
         </a>
       </footer>
     </div>
